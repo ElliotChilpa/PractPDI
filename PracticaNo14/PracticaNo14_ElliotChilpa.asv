@@ -1,0 +1,47 @@
+clc;
+clear all;
+close all;
+
+
+img_1 = imread("tortuga.jpg"); 
+img_2 = imread("bosque.jpg");
+img_3 = imread("venado.avif");
+
+img_1_d = im2double(img_1);
+img_2_d = im2double(img_2);
+img_3_d = im2double(img_3);
+
+% Transformación logarítmica 
+c_1 = 6;  % Factor de escala 
+c_2 = 2;
+imagen_log_1 = zeros(size(img_1_d));  % Prealocar matriz para la imagen transformada
+imagen_log_2 = zeros(size(img_2_d));  % Prealocar matriz para la imagen transformada
+
+% Canales, Red, Green y Blue
+for k = 1:3
+    imagen_log_1(:,:,k) = c_1 * log(1 + img_1_d(:,:,k));
+    %imagen_log_2(:,:,k) = c_2 * log(1 + img_2_d(:,:,k));
+end
+
+imagen_log_2(:,:,2) = c_2 * log(1 + img_2_d(:,:,2));
+imagen_log_2(:,:,1) = c_2 * log(1 + img_2_d(:,:,1));
+
+% Mostrar la imagen original y la transformada
+figure;
+subplot(1, 2, 1);
+imshow(img_1_d);
+title('Imagen Original');
+
+subplot(1, 2, 2);
+imshow(imagen_log_1);
+title('Transformación Logarítmica ()');
+
+% Mostrar la imagen original y la transformada
+figure;
+subplot(1, 2, 1);
+imshow(img_2_d);
+title('Imagen Original');
+
+subplot(1, 2, 2);
+imshow(imagen_log_2);
+title('Transformación Logarítmica');
